@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>職入你心｜你的職能光譜</title>
+<link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet" />
+<style>
+/* 
+  全新風格：手帳風、活潑、粉嫩色彩
+  參考「職入你心」海報視覺
+*/
+:root {
+  /* 基礎色 */
+  --bg-color: #FFFDF5; /* 暖黃底色 */
+  --text-main: #333333;
+  --text-blue: #3FA9F5; /* 標題藍 */
+  --text-yellow: #FFDE59; /* 標題陰影黃 */
+  
+  /* 裝飾線與卡片 */
+  --card-bg: #FFFFFF;
+  --dash-blue: #3FA9F5;
+  --border-radius: 24px;
+  
+  /* 六大職能專屬色 (對應海報磁鐵) */
+  --c-trust: #BFE2F2;    /* 贏得信任 - 粉藍 */
+  --c-coop: #CDE3B6;     /* 合作 - 粉綠 */
+  --c-learn: #F6E2B9;    /* 持續學習 - 橘黃 */
+  --c-init: #EDA8A3;     /* 積極主動 - 粉紅 */
+  --c-reason: #C8C5D6;   /* 應用推理 - 粉紫 */
+  --c-adapt: #D5C2B6;    /* 適應力 - 大地色 */
+
+  --font-main: 'Varela Round', 'Noto Sans TC', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  color: var(--text-main);
+  background-color: var(--bg-color);
+  /* 點陣背景圖案 */
+  background-image: radial-gradient(#F2E4A8 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px 20px 80px;
+  min-height: 100vh;
+}
+
+/* --- 動畫 --- */
+.screen { animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+@keyframes bounceIn {
+  0% { opacity: 0; transform: scale(0.95) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* --- 標題 (職入你心風格) --- */
+.hero-header { text-align: center; margin-bottom: 30px; }
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  margin: 0;
+  color: var(--text-blue);
+  /* 粗體藍字 + 黃色立體陰影 */
+  text-shadow: 
+    3px 3px 0 var(--text-yellow),
+    4px 4px 0 var(--text-yellow),
+    5px 5px 0 var(--text-yellow);
+  letter-spacing: 2px;
+}
+.hero-subtitle {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-blue);
+  background: #fff;
+  display: inline-block;
+  padding: 4px 16px;
+  border-radius: 20px;
+  border: 2px dashed var(--text-blue);
+  margin-top: 10px;
+}
+
+/* --- 卡片風格 (虛線邊框手帳風) --- */
+.card {
+  background: var(--card-bg);
+  border: 3px dashed var(--dash-blue);
+  border-radius: var(--border-radius);
+  padding: 35px 25px;
+  box-shadow: 0 8px 0 rgba(63, 169, 245, 0.1); /* 底部厚度 */
+  margin-bottom: 25px;
+}
+
+/* --- 表單 --- */
+.form-group { margin-bottom: 22px; }
+.form-group label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 1.05rem;
+}
+.form-group input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #E0E0E0;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  background: #FAFAFA;
+  transition: all 0.2s;
+}
+.form-group input:focus {
+  outline: none;
+  border-color: var(--text-blue);
+  background: #FFF;
+  box-shadow: 0 0 0 3px rgba(63, 169, 245, 0.2);
+}
+
+/* --- 按鈕 --- */
+.btn-primary {
+  width: 100%;
+  background: var(--text-blue);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 16px;
+  border-radius: 99px;
+  transition: all 0.2s;
+  box-shadow: 0 6px 0 #2A7DBA; /* 立體按鈕 */
+}
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 4px 0 #2A7DBA;
+}
+.btn-primary:active:not(:disabled) {
+  transform: translateY(6px);
+  box-shadow: 0 0 0 #2A7DBA;
+}
+.btn-primary:disabled {
+  background: #CCCCCC;
+  box-shadow: 0 6px 0 #AAAAAA;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 2px solid var(--text-blue);
+  color: var(--text-blue);
+  font-weight: 700;
+  padding: 12px 20px;
+  border-radius: 99px;
+  cursor: pointer;
+}
+
+/* --- 測驗頁面 --- */
+.qhead { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.q-progress-bar {
+  flex: 1;
+  height: 12px;
+  background: #EEEEEE;
+  border-radius: 10px;
+  margin-right: 15px;
+  overflow: hidden;
+}
+.q-progress-fill {
+  height: 100%;
+  background: var(--text-yellow); /* 亮黃色進度條 */
+  border-radius: 10px;
+  transition: width 0.4s ease-out;
+}
+.q-count { font-weight: 900; font-size: 1.2rem; color: var(--text-blue); }
+
+.q-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 25px;
+}
+
+/* 選項按鈕 */
+.opt {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  background: #FFFFFF;
+  border: 2px solid #E0E0E0;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 700;
+  color: #555;
+}
+.opt:hover {
+  border-color: var(--text-blue);
+  background: #F4FAFF;
+}
+.opt.sel {
+  border-color: var(--text-blue);
+  background: #E8F4FD;
+  box-shadow: 0 4px 0 rgba(63, 169, 245, 0.2);
+  transform: translateY(-2px);
+}
+.opt-letter {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  background: #EEEEEE;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+  color: #888;
+}
+.opt.sel .opt-letter {
+  background: var(--text-blue);
+  color: #FFF;
+}
+
+/* 自評區塊 (動物格子) */
+.self-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+.self-card {
+  background: #FFF;
+  border: 2px solid #E0E0E0;
+  border-radius: 16px;
+  padding: 20px 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.self-card:hover { border-color: var(--text-blue); transform: scale(1.02); }
+.self-card.sel { border-color: var(--text-blue); background: #E8F4FD; box-shadow: 0 4px 0 rgba(63, 169, 245, 0.2); }
+.sc-emoji { font-size: 2.5rem; margin-bottom: 5px; }
+.sc-title { font-weight: 900; color: #333; }
+
+/* --- 結果頁面 --- */
+.result-hero {
+  text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 2px dashed #E0E0E0;
+  margin-bottom: 25px;
+}
+.rh-title { font-size: 1.2rem; color: #666; font-weight: 700; margin-bottom: 5px; }
+.rh-animal { font-size: 5rem; margin: 10px 0; animation: jump 1s ease infinite alternate; }
+@keyframes jump { from { transform: translateY(0); } to { transform: translateY(-15px); } }
+.rh-trait { font-size: 2.2rem; font-weight: 900; margin: 0; }
+
+.radar-container {
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto 30px;
+}
+
+/* 職能解說卡 */
+.feedback-card {
+  background: #FAFAFA;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.fc-title { font-size: 1.1rem; font-weight: 900; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;}
+.fc-title.strength { color: #E75480; } /* 亮粉色 */
+.fc-title.develop { color: #F29C38; }  /* 橘黃色 */
+
+.course-link {
+  display: block;
+  text-align: center;
+  background: #FFFFFF;
+  border: 2px solid #F29C38;
+  color: #F29C38;
+  text-decoration: none;
+  font-weight: 900;
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 15px;
+  transition: 0.2s;
+}
+.course-link:hover { background: #F29C38; color: #FFF; }
+
+/* 探索資源卡片 */
+.explore-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 15px;
+}
+.explore-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 10px;
+  background: #FFFFFF;
+  border: 3px dashed #E0E0E0;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.explore-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 0 rgba(0,0,0,0.05);
+}
+.ec-emoji { font-size: 2.8rem; margin-bottom: 8px; }
+.ec-title { font-weight: 900; font-size: 1.1rem; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script type="text/babel">
+  const { useState, useEffect, useRef } = React;
+
+  // --- 資料定義 ---
+  const TRAITS = {
+    "贏得信任": { emoji: "🐶", color: "#BFE2F2", link: "#trust" },
+    "合作": { emoji: "🐝", color: "#CDE3B6", link: "#collaborating" },
+    "持續學習": { emoji: "🦉", color: "#F6E2B9", link: "#learning" },
+    "積極主動": { emoji: "🦁", color: "#EDA8A3", link: "#initiating" },
+    "應用推理": { emoji: "🦊", color: "#C8C5D6", link: "#reasoning" },
+    "適應力": { emoji: "🦎", color: "#D5C2B6", link: "#adaptability" }
+  };
+
+  const FEEDBACK = {
+    "贏得信任": { s: "你是建立團隊安全感不可或缺的角色，做事踏實、說到做到。", d: "試著在早期就拉入團隊一起討論，適度展現脆弱反而能凝聚共識。" },
+    "合作": { s: "你總能看見大局，重視資訊共享與目標對齊，是跨部門合作最棒的橋樑。", d: "在尋求共識的過程中，不要害怕為正確的事情堅持立場。" },
+    "持續學習": { s: "你不怕面對未知，總是主動尋找答案並渴望應用新知。", d: "別忘了確保你的學習方向與團隊當下的緊急目標是對齊的喔。" },
+    "積極主動": { s: "你不滿足於及格邊緣，總是主動多走一哩路，帶動整個團隊的節奏。", d: "行動力滿分！但要留意確保其他同事的腳步也能跟上你的規劃。" },
+    "應用推理": { s: "面對複雜的問題，你能冷靜拆解變因，用數據與事實說話。", d: "在溝通解法時，如果能多加一點對「人」的同理，你的建議會更容易被接受。" },
+    "適應力": { s: "當計畫趕不上變化時，你總能保持彈性，冷靜面對不確定性。", d: "如果能進一步把調整背後的邏輯分享給團隊，大家會更安心。" }
+  };
+
+  const QUESTIONS = [
+    { text: "跨部門推動新專案，初期目標未對齊。你最自然的反應是？", opts: [
+      { l: "A", t: "先準備好自己部分，等分工清楚再動", s: {"贏得信任":2, "應用推理":1} },
+      { l: "B", t: "主動約窗口聊，對齊期待和目標", s: {"合作":2, "積極主動":1} },
+      { l: "C", t: "對齊目標，整理結論分享給所有人", s: {"合作":2, "贏得信任":1} },
+      { l: "D", t: "先擬初步草案，丟出來讓大家討論修正", s: {"積極主動":2, "合作":1} }
+    ]},
+    { text: "發現自己判斷錯誤影響進度，主管還不知道。你會？", opts: [
+      { l: "A", t: "私下補救，盡量在主管發現前處理好", s: {"贏得信任":2, "適應力":1} },
+      { l: "B", t: "主動向主管報告錯誤及後續處理", s: {"贏得信任":2, "合作":1} },
+      { l: "C", t: "用數據重新檢視，整理清楚再說明", s: {"應用推理":2, "贏得信任":1} },
+      { l: "D", t: "主動承認並把這次學習分享給團隊", s: {"持續學習":2, "贏得信任":1} }
+    ]},
+    { text: "部門導入不熟悉的新工具，你的第一反應是？", opts: [
+      { l: "A", t: "先觀察別人怎麼用，等成熟再跟上", s: {"適應力":2, "贏得信任":1} },
+      { l: "B", t: "主動找資料問同事，先把基本弄懂", s: {"持續學習":2, "積極主動":1} },
+      { l: "C", t: "學會操作並試著找出應用在工作上的方式", s: {"持續學習":2, "應用推理":1} },
+      { l: "D", t: "評估對團隊長期影響，並協助大家上手", s: {"積極主動":2, "持續學習":1} }
+    ]},
+    { text: "客戶需求與真正想解決的問題不符。你會？", opts: [
+      { l: "A", t: "照客戶說的需求做，畢竟那是他要的", s: {"贏得信任":2, "合作":1} },
+      { l: "B", t: "把需求做好，做完後再順便提我的觀察", s: {"贏得信任":2, "積極主動":1} },
+      { l: "C", t: "主動跟客戶確認真正的問題再執行", s: {"應用推理":2, "合作":1} },
+      { l: "D", t: "釐清問題並分析原因，給予更完整建議", s: {"應用推理":2, "積極主動":1} }
+    ]},
+    { text: "面對變因多、不易判斷的問題，你的處理方式？", opts: [
+      { l: "A", t: "先憑經驗判斷，邊做邊調整", s: {"適應力":2, "應用推理":1} },
+      { l: "B", t: "把問題拆解開來，一步一步處理", s: {"應用推理":2, "適應力":1} },
+      { l: "C", t: "找相關人討論，整合不同觀點再決定", s: {"合作":2, "應用推理":1} },
+      { l: "D", t: "用數據分析找出關鍵原因再決定", s: {"應用推理":2, "持續學習":1} }
+    ]},
+    { text: "主管宣布轉做不熟悉的新方向，你有些疑慮。你會？", opts: [
+      { l: "A", t: "先照指示做，執行中看狀況反映", s: {"贏得信任":2, "應用推理":1} },
+      { l: "B", t: "找主管溝通，了解決策背景並表達觀察", s: {"合作":2, "贏得信任":1} },
+      { l: "C", t: "先學習新知識，準備好再給主管回饋", s: {"持續學習":2, "適應力":1} },
+      { l: "D", t: "不只配合，還評估對團隊長期影響供參考", s: {"應用推理":2, "積極主動":1} }
+    ]},
+    { text: "有背景不同的人加入需你帶領的任務。你會？", opts: [
+      { l: "A", t: "把工作說明清楚，有問題再來問我", s: {"贏得信任":2, "合作":1} },
+      { l: "B", t: "整理指引讓他照著上手，定期確認進度", s: {"合作":2, "應用推理":1} },
+      { l: "C", t: "聊聊他的習慣，找出最適合的合作方式", s: {"合作":2, "適應力":1} },
+      { l: "D", t: "帶他上手並分享學習方法幫他建立方向", s: {"持續學習":2, "合作":1} }
+    ]},
+    { text: "主管交辦緊急任務，同時同事工作卡住急需你確認。你會？", opts: [
+      { l: "A", t: "先完成主管任務，請同事稍等", s: {"贏得信任":2, "積極主動":2} },
+      { l: "B", t: "跟主管說明狀況，告知先處理哪邊", s: {"贏得信任":2, "合作":2} },
+      { l: "C", t: "同時推進：先快速釐清卡住點，再做主管任務", s: {"積極主動":2, "合作":2, "應用推理":1} },
+      { l: "D", t: "重新拆解資源，跟雙方討論新安排", s: {"應用推理":2, "合作":2, "適應力":1} }
+    ]},
+    { text: "客戶緊急需求需兩部門配合，但另一部門資源緊無法支援。你會？", opts: [
+      { l: "A", t: "先把自己能做的做好，另一個部門的事再說", s: {"贏得信任":2, "應用推理":2} },
+      { l: "B", t: "向客戶說明會盡力處理，並把困難回報主管", s: {"贏得信任":2, "適應力":2} },
+      { l: "C", t: "找另部門窗口談，找出對雙方可行的方案", s: {"合作":2, "應用推理":2, "適應力":1} },
+      { l: "D", t: "協調這次，並建立長期合作節奏避免再發生", s: {"合作":2, "積極主動":2, "應用推理":1} }
+    ]},
+    { text: "這週同時面對：客戶緊急需求、主管專案限期、同事需你確認。你會？", opts: [
+      { l: "A", t: "先跟主管確認優先順序，照判斷處理", s: {"贏得信任":2, "合作":2} },
+      { l: "B", t: "快速評估影響，主動跟三方溝通新時程", s: {"合作":2, "積極主動":2, "適應力":1} },
+      { l: "C", t: "重新拆解三件事，找出可同步進行與調整資源的地方", s: {"應用推理":2, "合作":2, "積極主動":1} },
+      { l: "D", t: "處理眼前，還跟主管討論這反映出什麼系統性問題", s: {"應用推理":2, "持續學習":2, "合作":1} }
+    ]}
+  ];
+
+  // --- APP 元件 ---
+  const App = () => {
+    const [step, setStep] = useState('intro'); 
+    const [formData, setFormData] = useState({});
+    const [answers, setAnswers] = useState([]);
+    const [selfEval, setSelfEval] = useState('');
+
+    const startQuiz = (data) => { setFormData(data); setStep('quiz'); };
+    const finishQuiz = (ans) => { setAnswers(ans); setStep('self'); };
+    const finishSelf = (trait) => { setSelfEval(trait); setStep('result'); };
+    const goExplore = () => { setStep('explore'); };
+
+    return (
+      <div className="container">
+        {step === 'intro' && <IntroScreen onStart={startQuiz} />}
+        {step === 'quiz' && <QuizScreen onFinish={finishQuiz} />}
+        {step === 'self' && <SelfScreen onFinish={finishSelf} />}
+        {step === 'result' && <ResultScreen answers={answers} selfEval={selfEval} onNext={goExplore} />}
+        {step === 'explore' && <ExploreScreen />}
+      </div>
+    );
+  };
+
+  // --- 首頁 ---
+  const IntroScreen = ({ onStart }) => {
+    const [f, setF] = useState({n:'', id:'', d:''});
+    const isValid = f.n && f.id && f.d;
+    return (
+      <div className="screen">
+        <div className="hero-header">
+          <h1 className="hero-title">職入你心</h1>
+          <div className="hero-subtitle">報名與職能測驗</div>
+        </div>
+        <div className="card">
+          <div className="form-group">
+            <label>姓名</label>
+            <input type="text" placeholder="你的名字" onChange={e => setF({...f, n: e.target.value})} />
+          </div>
+          <div className="form-group">
+            <label>工號 (抽獎用)</label>
+            <input type="text" placeholder="員工編號" onChange={e => setF({...f, id: e.target.value})} />
+          </div>
+          <div className="form-group">
+            <label>部門</label>
+            <input type="text" placeholder="例如：HR" onChange={e => setF({...f, d: e.target.value})} />
+          </div>
+          <button className="btn-primary" disabled={!isValid} onClick={() => onStart(f)}>
+            開始測驗 ➔
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  // --- 測驗頁 ---
+  const QuizScreen = ({ onFinish }) => {
+    const [qIdx, setQIdx] = useState(0);
+    const [sel, setSel] = useState(null);
+    const [ans, setAns] = useState([]);
+    const q = QUESTIONS[qIdx];
+
+    const next = () => {
+      const newAns = [...ans, sel];
+      if (qIdx < 9) { setAns(newAns); setQIdx(qIdx+1); setSel(null); } 
+      else { onFinish(newAns); }
+    };
+
+    return (
+      <div className="screen card">
+        <div className="qhead">
+          <div className="q-progress-bar">
+            <div className="q-progress-fill" style={{width: `${(qIdx+1)*10}%`}}></div>
+          </div>
+          <div className="q-count">{qIdx+1}/10</div>
+        </div>
+        <div className="q-title">{q.text}</div>
+        <div>
+          {q.opts.map(o => (
+            <div key={o.l} className={`opt ${sel===o ? 'sel':''}`} onClick={()=>setSel(o)}>
+              <div className="opt-letter">{o.l}</div>
+              <div>{o.t}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{marginTop: '25px', display:'flex', gap:'15px'}}>
+           {qIdx > 0 && <button className="btn-ghost" onClick={()=>{setQIdx(qIdx-1); setSel(null);}}>上一題</button>}
+           <button className="btn-primary" disabled={!sel} onClick={next}>確認</button>
+        </div>
+      </div>
+    );
+  };
+
+  // --- 自評頁 ---
+  const SelfScreen = ({ onFinish }) => {
+    const [sel, setSel] = useState('');
+    return (
+      <div className="screen card">
+        <div className="qhead">
+           <div className="q-progress-bar"><div className="q-progress-fill" style={{width:'100%'}}></div></div>
+           <div className="q-count">最後</div>
+        </div>
+        <div className="q-title">憑直覺，你覺得自己在哪個職能最強？</div>
+        <div className="self-grid">
+          {Object.keys(TRAITS).map(t => (
+            <div key={t} className={`self-card ${sel===t ? 'sel':''}`} onClick={()=>setSel(t)}>
+              <div className="sc-emoji">{TRAITS[t].emoji}</div>
+              <div className="sc-title">{t}</div>
+            </div>
+          ))}
+        </div>
+        <button className="btn-primary" disabled={!sel} onClick={()=>onFinish(sel)} style={{marginTop:'25px'}}>看結果報告 ➔</button>
+      </div>
+    );
+  };
+
+  // --- 結果頁面 ---
+  const ResultScreen = ({ answers, selfEval, onNext }) => {
+    const canvasRef = useRef(null);
+    const keys = Object.keys(TRAITS);
+    
+    // 計算分數
+    let scores = { "贏得信任":0, "合作":0, "持續學習":0, "積極主動":0, "應用推理":0, "適應力":0 };
+    answers.forEach(a => {
+      Object.keys(a.s).forEach(k => scores[k] += a.s[k]);
+    });
+    
+    // 找最高分
+    let topTrait = keys[0];
+    keys.forEach(k => { if(scores[k] > scores[topTrait]) topTrait = k; });
+    const topData = TRAITS[topTrait];
+    const fb = FEEDBACK[topTrait];
+
+    useEffect(() => {
+      if (canvasRef.current) {
+        new Chart(canvasRef.current, {
+          type: 'radar',
+          data: {
+            labels: keys,
+            datasets: [{
+              data: keys.map(k => scores[k]),
+              backgroundColor: topData.color + '80', // 半透明
+              borderColor: topData.color,
+              pointBackgroundColor: topData.color,
+              borderWidth: 3,
+            }]
+          },
+          options: { scales: { r: { min: 0, ticks: { display: false } } }, plugins: { legend: { display: false } } }
+        });
+      }
+    }, []);
+
+    return (
+      <div className="screen card" style={{paddingTop: '20px'}}>
+        <div className="result-hero">
+          <div className="rh-title">你的職場代表動物是</div>
+          <div className="rh-animal">{topData.emoji}</div>
+          <h2 className="rh-trait" style={{color: topData.color}}>{topTrait}</h2>
+        </div>
+        
+        <h3 style={{textAlign:'center', marginBottom:'15px', color:'#333'}}>職能光譜分佈</h3>
+        <div className="radar-container"><canvas ref={canvasRef}></canvas></div>
+
+        <div className="feedback-card">
+          <div className="fc-title strength">✨ 你的超能力</div>
+          <div>{fb.s}</div>
+        </div>
+
+        <div className="feedback-card" style={{background: '#FFF9E6'}}>
+          <div className="fc-title develop">🌱 可以伸展的空間</div>
+          <div>{fb.d}</div>
+        </div>
+
+        <div style={{textAlign:'center', padding:'15px', border:'2px dashed #E0E0E0', borderRadius:'16px'}}>
+           <div style={{fontSize:'0.9rem', color:'#666'}}>你原本自認最強的是：<strong>{selfEval} {TRAITS[selfEval].emoji}</strong></div>
+           <div style={{fontWeight:'bold', marginTop:'5px', color: selfEval === topTrait ? '#4CAF50' : '#FF9800'}}>
+             {selfEval === topTrait ? "🎯 自我認知超精準！" : "💡 發現了意想不到的潛力！"}
+           </div>
+        </div>
+
+        <button className="btn-primary" onClick={onNext} style={{marginTop: '25px'}}>
+          探索六大職能資源 ➔
+        </button>
+      </div>
+    );
+  };
+
+  // --- 探索資源頁面 ---
+  const ExploreScreen = () => {
+    return (
+      <div className="screen card" style={{paddingTop: '30px'}}>
+        <div className="result-hero" style={{borderBottom: 'none', paddingBottom: '0', marginBottom: '15px'}}>
+          <h2 className="rh-trait" style={{color: 'var(--text-blue)', fontSize: '1.6rem', marginBottom: '10px'}}>六大職能資源</h2>
+          <p style={{color: '#666', fontWeight: '700', fontSize: '0.95rem'}}>點擊下方可愛動物，<br/>前往各職能的專屬網站！</p>
+        </div>
+        
+        <div className="explore-grid">
+          {Object.keys(TRAITS).map(t => (
+            <a 
+              key={t} 
+              href={TRAITS[t].link} 
+              target="_blank" 
+              className="explore-card" 
+              style={{borderColor: TRAITS[t].color}}
+              onClick={(e) => {
+                // 如果目前還沒有真實網址，可以先取消下方的註解來測試跳出視窗
+                // e.preventDefault(); alert(`即將前往「${t}」的網站！\n\n您可以隨時在程式碼 TRAITS 變數中，將 link 換成真實的內網網址。`);
+              }}
+            >
+              <div className="ec-emoji">{TRAITS[t].emoji}</div>
+              <div className="ec-title" style={{color: '#333'}}>{t}</div>
+            </a>
+          ))}
+        </div>
+        
+        <button className="btn-ghost" onClick={() => window.location.reload()} style={{width: '100%', marginTop: '25px'}}>
+          ⟲ 回到首頁重新測驗
+        </button>
+      </div>
+    );
+  };
+
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  root.render(<App />);
+</script>
+</body>
+</html>

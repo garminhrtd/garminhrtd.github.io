@@ -330,6 +330,24 @@ body {
 <script type="text/babel">
   const { useState, useEffect, useRef } = React;
 
+  // TODO: 貼上你的 Google Apps Script Web App URL
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwFjkE8-zM_m0Xdt25e93WMQ5lOicJQWigIFB4Gc-qOPWBE8FfHFyLcQC-KnQUgGRg4/exec";
+
+  const sendToGoogleSheet = async (payload) => {
+    if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes("請貼上")) {
+      console.warn("尚未設定 GOOGLE_SCRIPT_URL，資料不會送出", payload);
+      return;
+    }
+
+    // 使用 no-cors：適合 GitHub Pages → Apps Script 的簡易送資料情境
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    });
+  };
+
   // --- 資料定義 ---
   const TRAITS = {
     "贏得信任": { emoji: "🐶", color: "#BFE2F2", link: "#trust" },
@@ -429,7 +447,7 @@ body {
         {step === 'intro' && <IntroScreen onStart={startQuiz} />}
         {step === 'quiz' && <QuizScreen onFinish={finishQuiz} />}
         {step === 'self' && <SelfScreen onFinish={finishSelf} />}
-        {step === 'result' && <ResultScreen answers={answers} selfEval={selfEval} onNext={goExplore} />}
+        {step === 'result' && <ResultScreen formData={formData} answers={answers} selfEval={selfEval} onNext={goExplore} />}
         {step === 'explore' && <ExploreScreen />}
       </div>
     );
@@ -528,9 +546,10 @@ body {
   };
 
   // --- 結果頁面 ---
-  const ResultScreen = ({ answers, selfEval, onNext }) => {
+  const ResultScreen = ({ formData, answers, selfEval, onNext }) => {
     const canvasRef = useRef(null);
     const keys = Object.keys(TRAITS);
+    const [submitStatus, setSubmitStatus] = useState('sending');
     
     // 計算分數
     let scores = { "贏得信任":0, "合作":0, "持續學習":0, "積極主動":0, "應用推理":0, "適應力":0 };
@@ -563,6 +582,26 @@ body {
       }
     }, []);
 
+    useEffect(() => {
+      const payload = {
+        submittedAt: new Date().toISOString(),
+        name: formData.n,
+        employeeId: formData.id,
+        department: formData.d,
+        topTrait,
+        selfEval,
+        scores,
+        answers: answers.map(a => a.l).join('')
+      };
+
+      sendToGoogleSheet(payload)
+        .then(() => setSubmitStatus('sent'))
+        .catch((error) => {
+          console.error('送出資料失敗', error);
+          setSubmitStatus('error');
+        });
+    }, []);
+
     return (
       <div className="screen card" style={{paddingTop: '20px'}}>
         <div className="result-hero">
@@ -589,6 +628,12 @@ body {
            <div style={{fontWeight:'bold', marginTop:'5px', color: selfEval === topTrait ? '#4CAF50' : '#FF9800'}}>
              {selfEval === topTrait ? "🎯 自我認知超精準！" : "💡 發現了意想不到的潛力！"}
            </div>
+        </div>
+
+        <div style={{textAlign:'center', marginTop:'15px', color:'#666', fontSize:'0.9rem'}}>
+          {submitStatus === 'sending' && '資料送出中…'}
+          {submitStatus === 'sent' && '✅ 已送出填答資料'}
+          {submitStatus === 'error' && '⚠️ 資料送出失敗，請截圖結果或通知承辦人'}
         </div>
 
         <button className="btn-primary" onClick={onNext} style={{marginTop: '25px'}}>

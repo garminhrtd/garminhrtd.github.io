@@ -461,16 +461,16 @@ body {
       <div className="screen">
         <div className="hero-header">
           <h1 className="hero-title">職入你心</h1>
-          <div className="hero-subtitle">報名與職能測驗</div>
+          <div className="hero-subtitle">職能測驗</div>
         </div>
         <div className="card">
           <div className="form-group">
             <label>姓名</label>
-            <input type="text" placeholder="你的名字" onChange={e => setF({...f, n: e.target.value})} />
+            <input type="text" placeholder="例：張瑜萱" onChange={e => setF({...f, n: e.target.value})} />
           </div>
           <div className="form-group">
-            <label>工號 (抽獎用)</label>
-            <input type="text" placeholder="員工編號" onChange={e => setF({...f, id: e.target.value})} />
+            <label> 員工編號 </label>
+            <input type="text" placeholder="例：28744" onChange={e => setF({...f, id: e.target.value})} />
           </div>
           <div className="form-group">
             <label>部門</label>
